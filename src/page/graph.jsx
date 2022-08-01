@@ -1,39 +1,39 @@
 import React, { useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid,Tooltip } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid,Tooltip, CartesianAxis } from 'recharts';
 
 
 
 export default function GrapApp() {
-  const [credit, setCredit] = React.useState(0);
+  const [credit, setCredit] = React.useState(1000);
   const [credit2, setCredit2] = React.useState(1500);
   const [pagamentoMotorista, setPagamentoMotorista] = React.useState(10398);
   
   const data = [
     {
-      name: 'Page A',
+      name: 'Créditos',
       creditos: credit,
       creditos2: credit2,
     },
     {
-      name: 'Page B',
+      name: 'Pagamento',
       pagamentoMotorista,
       pagamentoComissaoPX: 1398,
       despensaDeReembolsos: 6210,
     },
     {
-      name: 'Page C',
+      name: 'Saldo',
       saldoRestante: 2290,
     },
   ];
-  //TODO - remove this
-  useEffect(() => {
-    setTimeout(() => {
-      setCredit(credit + 100);
-    }, 10000);
-  }, [credit]);
+  // //TODO - remove this
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setCredit(credit + 600);
+  //   }, 10000);
+  // }, [credit]);
 
     const getIntroOfPage = (label,payload) => {
-        if (label === 'Page A') {
+        if (label === 'Créditos') {
             return (
             <>
                 <p className="text-black">{`Créditos inseridos por PIX/TED e boletos :  R$ ${payload[0].value}`}</p>
@@ -41,7 +41,7 @@ export default function GrapApp() {
             </>
           )
         }
-        if (label === 'Page B') {
+        if (label === 'Pagamento') {
             return (
                 <>
                     <p className="text-black">{`Pagamento para motoristas :  R$ ${payload[0].value}`}</p>
@@ -50,7 +50,7 @@ export default function GrapApp() {
                 </>
               )
         }
-        if (label === 'Page C') {
+        if (label === 'Saldo') {
           return ( 
             <>
                 <p className="text-black">{`Saldo restante :  R$ ${payload[0].value}`}</p>
@@ -58,6 +58,7 @@ export default function GrapApp() {
             )
         }
         return '';
+        
       };
     const CustomTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
@@ -70,15 +71,14 @@ export default function GrapApp() {
       
         return null;
       };
+
       const DataFormater = (number) => {
-        //TODO formate com o helper
-        // return 'R$'+ number;
         return 'R$'+ new Intl.NumberFormat('pt-BR', {
           notation: "compact",
           compactDisplay: "short"
         }).format(number);
       }
-      
+
     return (
         <div>
             <h1>TEste</h1>
@@ -93,11 +93,12 @@ export default function GrapApp() {
                 bottom: 5,
                 }}
             >
-                <CartesianGrid strokeDasharray="3 3" />
+              {/* <CartesianAxis x1={4} /> */}
+                <CartesianGrid strokeDasharray="2 2"/>
                 {/* <YAxis   tickFormatter={(value)=>'R$'+value}  type='number' > */}
-                <YAxis   tickFormatter={DataFormater}  type='number' >
+                <YAxis   tickFormatter={DataFormater}  type='number'  tickCount={3} />
                 
-                </YAxis>
+                {/* </YAxis> */}
                 <XAxis dataKey="name" />
                
                 <Tooltip content={CustomTooltip} />

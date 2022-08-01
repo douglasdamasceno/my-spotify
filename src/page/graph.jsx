@@ -17,12 +17,12 @@ export default function GrapApp() {
     {
       name: 'Pagamento',
       pagamentoMotorista,
-      pagamentoComissaoPX: 1398,
-      despensaDeReembolsos: 6210,
+      pagamentoComissaoPX: 13980,
+      despensaDeReembolsos: 62100,
     },
     {
       name: 'Saldo',
-      saldoRestante: 2290,
+      saldoRestante: 22900,
     },
   ];
   // //TODO - remove this
@@ -32,6 +32,15 @@ export default function GrapApp() {
   //   }, 10000);
   // }, [credit]);
 
+  const allLegendInfos = [
+    {id:1, name: 'Créditos por reembolsos de multas e sinistros', color: '#9EE9A2'},
+    {id:2, name: 'Estornos', color: '#3D86C6'},
+    {id:3, name: 'Créditos inseridos por PIX/TED e boletos', color: '#00AD17'},
+    {id:4, name: 'Despesas de reembolsos', color: '#FFCFD5'},
+    {id:5, name: 'Pagamento de Comissão PX', color: '#E87779'},
+    {id:6, name: 'Pagamento para motoristas', color: '#EA3F3E'},
+    {id:7, name: 'Saldo restante', color: '#FF6F15'},
+  ]
     const getIntroOfPage = (label,payload) => {
         if (label === 'Créditos') {
             return (
@@ -58,7 +67,7 @@ export default function GrapApp() {
             )
         }
         return '';
-        
+
       };
     const CustomTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
@@ -80,23 +89,23 @@ export default function GrapApp() {
       }
 
     return (
-        <div>
-            <h1>TEste</h1>
+        <div className='flex flex-col justify-center items-center'>
+            <h1 className='font-bold font-mono text-blue-600 text-lg'>Teste</h1>
             <BarChart
                 width={500}
                 height={300}
                 data={data}
                 margin={{
-                top: 20,
-                right: 30,
-                left: 20,
-                bottom: 5,
+                  top: 20,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
                 }}
             >
               {/* <CartesianAxis x1={4} /> */}
                 <CartesianGrid strokeDasharray="2 2"/>
                 {/* <YAxis   tickFormatter={(value)=>'R$'+value}  type='number' > */}
-                <YAxis   tickFormatter={DataFormater}  type='number'  tickCount={3} />
+                <YAxis tickCount={30} tickInterval={1000} tickFormatter={DataFormater}  type='number'  />
                 
                 {/* </YAxis> */}
                 <XAxis dataKey="name" />
@@ -112,9 +121,28 @@ export default function GrapApp() {
 
                 <Bar dataKey="saldoRestante" stackId="c" fill="#FF6F15" />
             </BarChart>
+            <div className='flex flex-col gap-2'>
+              {
+                allLegendInfos.map((legendInfo) => (
+                  <LegendInfos key={legendInfo.id} name={legendInfo.name} bgColor={legendInfo.color}  />
+                  ))
+              }
+            </div>
         </div>
     );
 }
+const LegendInfos = (props) => {
+  return (
+    <div className="flex gap-6">
+      <div
+        className="flex h-6 w-6"
+        style={{ backgroundColor: `${props.bgColor}` }}
+      />
+      <p className='tw-h-full'>{props.name}</p>
+    </div>
+  );
+};
+
 //verde
 // "Créditos inseridos por PIX/TED e boletos" #00AD17
 // "Créditos por reembolsos de multas e sinistros" #9EE9A2

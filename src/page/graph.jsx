@@ -6,6 +6,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid,Tooltip } from 'recharts';
 export default function GrapApp() {
   const [credit, setCredit] = React.useState(0);
   const [credit2, setCredit2] = React.useState(1500);
+  const [pagamentoMotorista, setPagamentoMotorista] = React.useState(10398);
+  
   const data = [
     {
       name: 'Page A',
@@ -14,7 +16,7 @@ export default function GrapApp() {
     },
     {
       name: 'Page B',
-      pagamentoMotorista: 1398,
+      pagamentoMotorista,
       pagamentoComissaoPX: 1398,
       despensaDeReembolsos: 6210,
     },
@@ -70,8 +72,13 @@ export default function GrapApp() {
       };
       const DataFormater = (number) => {
         //TODO formate com o helper
-          return 'R$'+ number;
+        // return 'R$'+ number;
+        return 'R$'+ new Intl.NumberFormat('pt-BR', {
+          notation: "compact",
+          compactDisplay: "short"
+        }).format(number);
       }
+      
     return (
         <div>
             <h1>TEste</h1>

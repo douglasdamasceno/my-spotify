@@ -1,43 +1,35 @@
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import React, { useEffect } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid,Tooltip } from 'recharts';
 
-const data = [
-  {
-    name: 'Page A',
-    creditos: 4000,
-    creditos2: 4500,
-    // pagamentoMotorista: 2400,
-    // pagamentoComissaoPX: 2600,
-    // despensaDeReembolsos: 2400,
-    // saldoRestante: 2400,
-  },
-  {
-    name: 'Page B',
-    // creditos: 3000,
-    // creditos2: 3100,
-    pagamentoMotorista: 1398,
-    pagamentoComissaoPX: 1398,
-    despensaDeReembolsos: 2210,
-    // saldoRestante: 2210,
-  },
-  {
-    name: 'Page C',
-    // creditos: 2000,
-    // creditos2: 1000,
-    // pagamentoMotorista: 9800,
-    // pagamentoComissaoPX: 800,
-    // despensaDeReembolsos: 2290,
-    saldoRestante: 2290,
-  },
-];
+
 
 export default function GrapApp() {
+  const [credit, setCredit] = React.useState(0);
+  const [credit2, setCredit2] = React.useState(1500);
+  const data = [
+    {
+      name: 'Page A',
+      creditos: credit,
+      creditos2: credit2,
+    },
+    {
+      name: 'Page B',
+      pagamentoMotorista: 1398,
+      pagamentoComissaoPX: 1398,
+      despensaDeReembolsos: 6210,
+    },
+    {
+      name: 'Page C',
+      saldoRestante: 2290,
+    },
+  ];
+  //TODO - remove this
+  useEffect(() => {
+    setTimeout(() => {
+      setCredit(credit + 100);
+    }, 10000);
+  }, [credit]);
 
-    const CustomizedLabel = () => {
-        return (
-            <h1></h1>
-        );
-    }
     const getIntroOfPage = (label,payload) => {
         if (label === 'Page A') {
             return (
@@ -76,6 +68,10 @@ export default function GrapApp() {
       
         return null;
       };
+      const DataFormater = (number) => {
+        //TODO formate com o helper
+          return 'R$'+ number;
+      }
     return (
         <div>
             <h1>TEste</h1>
@@ -91,9 +87,12 @@ export default function GrapApp() {
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
+                {/* <YAxis   tickFormatter={(value)=>'R$'+value}  type='number' > */}
+                <YAxis   tickFormatter={DataFormater}  type='number' >
+                
+                </YAxis>
                 <XAxis dataKey="name" />
-                {/* <XAxis  /> */}
-                <YAxis  type='number' domain={[0,15000]} label={CustomizedLabel} />
+               
                 <Tooltip content={CustomTooltip} />
                 
                 <Bar dataKey="creditos" stackId="a" fill="#00AD17" />

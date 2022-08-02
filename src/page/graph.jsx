@@ -90,7 +90,8 @@ export default function GrapApp() {
 
     return (
         <div className='flex flex-col justify-center items-center'>
-            <h1 className='font-bold font-mono text-blue-600 text-lg'>Teste</h1>
+            <h1 className='font-normal font-sans text-black text-base'>Total entradas</h1>
+            <p className='font-bold font-sans text-black text-base'>R$150.100,34</p>
             <BarChart
                 width={500}
                 height={300}
@@ -105,7 +106,8 @@ export default function GrapApp() {
               {/* <CartesianAxis x1={4} /> */}
                 <CartesianGrid strokeDasharray="2 2"/>
                 {/* <YAxis   tickFormatter={(value)=>'R$'+value}  type='number' > */}
-                <YAxis tickCount={30} tickInterval={1000} tickFormatter={DataFormater}  type='number'  />
+                {/* <YAxis tickCount={30} tickInterval={1000} tickFormatter={DataFormater}  type='number'  /> */}
+                <YAxis tickCount={30} domain={[0,'dataMax + 10000']} tickFormatter={DataFormater}  type='number'  />
                 
                 {/* </YAxis> */}
                 <XAxis dataKey="name" />
